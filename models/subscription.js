@@ -53,7 +53,7 @@ const subSchema=new mongoose.Schema(
         message:'Start date must be in the past'
       }
     },
-     renewaltDate:
+     renewalDate:
     {
       type:Date,
 
@@ -76,7 +76,7 @@ const subSchema=new mongoose.Schema(
 subSchema.pre('save',function(next)
 
 {
-  if(!this.renewaltDate)
+  if(!this.renewalDate)
   {
     const renewalPeriods=
     {
@@ -85,10 +85,10 @@ subSchema.pre('save',function(next)
       monthly:30,
       yearly:365
     }
-    this.renewaltDate=new Date(this.startDate)
-    this.renewaltDate.setDate(this.renewaltDate.getDate()+renewalPeriods[this.frequency])
+    this.renewalDate=new Date(this.startDate)
+    this.renewalDate.setDate(this.renewaltDate.getDate()+renewalPeriods[this.frequency])
   }
-  if(this.renewaltDate < new Date())
+  if(this.renewalDate < new Date())
   {
     this.status='expired'
   }

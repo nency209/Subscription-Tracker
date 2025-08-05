@@ -1,6 +1,5 @@
-import express from 'express'
-var router = express.Router();
-
-router.get('/',)
-
-export default router
+import express from 'express';
+import { sendReminders } from '../controller/workflow.js';
+const router = express.Router();
+router.get('/reminders', sendReminders);
+export default router;
