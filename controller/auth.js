@@ -3,6 +3,7 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import Jwt from "jsonwebtoken";
 import { JWT_SECRET, EXPIREDIN } from "../config/env.js";
+import { sendEmail } from "../utils/emailservices.js";
 
 export const signup = async (req, res, next) => {
   const session = await mongoose.startSession();
@@ -66,6 +67,8 @@ export const signin = async (req, res,  next) => {
     const token = Jwt.sign({ userId: user._id },JWT_SECRET, {
       expiresIn: EXPIREDIN || "7d",
     });
+
+    await sendEmail(user.email,user.name)
     res.status(200).json({
       sucess: true,
       message: "sucessfully  user SIGNIN SUCESSFULLY",
